@@ -2,18 +2,19 @@
 /* --- ROOT VARIABLES --- */
 /* ===================================================== */
 :root {
-    --bg-dark: #02120c; /* Very dark green/black */
-    --primary-green: #1B4D3E; /* Brand Green */
-    --accent-green: #2ecc71; /* Bright green for highlights */
-    --accent-yellow: #F4C430; /* Gold Accent */
+    --bg-dark: #02120c;                     /* Very dark green/black */
+    --primary-green: #1B4D3E;               /* Brand Green */
+    --accent-green: #2ecc71;                /* Bright green for highlights */
+    --accent-yellow: #F4C430;               /* Gold Accent */
     --text-white: #ffffff;
     --text-grey: #a0aec0;
-    --glass-bg: rgba(27, 77, 62, 0.2);
-    --glass-border: rgba(46, 204, 113, 0.25);
-    --glass-border-hover: rgba(46, 204, 113, 0.5);
-    --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    --glow-green: 0 0 20px rgba(46, 204, 113, 0.4);
-    --glow-yellow: 0 0 20px rgba(244, 196, 48, 0.4);
+    --glass-bg: rgba(27, 77, 62, 0.15);     /* Slightly more transparent */
+    --glass-border: rgba(46, 204, 113, 0.3); /* Brighter border */
+    --glass-border-hover: rgba(46, 204, 113, 0.6);
+    --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    --glow-green: 0 0 25px rgba(46, 204, 113, 0.5);
+    --glow-green-strong: 0 0 40px rgba(46, 204, 113, 0.6);
+    --glow-yellow: 0 0 25px rgba(244, 196, 48, 0.5);
     --border-radius: 16px;
     --transition: all 0.3s ease;
 }
@@ -38,6 +39,8 @@ body {
     background-color: var(--bg-dark);
     overflow-x: hidden;
     position: relative;
+    /* Subtle vignette so bright stars don't wash out content */
+    background-image: radial-gradient(ellipse at center, transparent 0%, rgba(2, 18, 12, 0.4) 100%);
 }
 
 #bg-canvas {
@@ -59,20 +62,28 @@ a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 
 /* ===================================================== */
-/* --- GLASSMORPHISM UTILITY --- */
+/* --- GLASSMORPHISM UTILITY (Enhanced Glow) --- */
 /* ===================================================== */
 .glass-panel {
     background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border);
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
+    box-shadow: 
+        var(--shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        inset 0 0 60px rgba(46, 204, 113, 0.03);
     transition: var(--transition);
 }
 
 .glass-panel:hover {
     border-color: var(--glass-border-hover);
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        inset 0 0 60px rgba(46, 204, 113, 0.06),
+        0 0 30px rgba(46, 204, 113, 0.15);
 }
 
 /* ===================================================== */
@@ -103,7 +114,7 @@ header {
 .logo-img {
     height: 40px;
     width: auto;
-    filter: drop-shadow(0 0 8px rgba(46, 204, 113, 0.4));
+    filter: drop-shadow(0 0 12px rgba(46, 204, 113, 0.6));
 }
 
 .logo-text {
@@ -111,7 +122,7 @@ header {
     font-size: 1.2rem;
     color: var(--text-white);
     letter-spacing: 1px;
-    text-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+    text-shadow: 0 0 15px rgba(46, 204, 113, 0.5);
 }
 
 .nav-links {
@@ -130,7 +141,7 @@ header {
 
 .nav-links a:hover {
     color: var(--accent-green);
-    text-shadow: 0 0 10px var(--accent-green);
+    text-shadow: 0 0 15px var(--accent-green);
 }
 
 .btn-nav-download {
@@ -178,7 +189,7 @@ header {
     align-items: center;
     gap: 8px;
     transition: var(--transition);
-    box-shadow: 0 0 10px rgba(46, 204, 113, 0.2);
+    box-shadow: 0 0 15px rgba(46, 204, 113, 0.25);
 }
 
 .lang-toggle:hover {
@@ -216,15 +227,17 @@ header {
     overflow: hidden;
 }
 
+/* Glowing top accent line */
 .hero-text::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, var(--accent-green), var(--accent-yellow), var(--accent-green));
-    opacity: 0.8;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent-green), var(--accent-yellow), var(--accent-green), transparent);
+    opacity: 0.9;
+    box-shadow: 0 0 20px var(--accent-green);
 }
 
 .hero-text h1 {
@@ -236,7 +249,10 @@ header {
 
 .hero-text .highlight {
     color: var(--accent-green);
-    text-shadow: 0 0 20px rgba(46, 204, 113, 0.6), 0 0 40px rgba(46, 204, 113, 0.3);
+    text-shadow: 
+        0 0 20px rgba(46, 204, 113, 0.7),
+        0 0 40px rgba(46, 204, 113, 0.4),
+        0 0 60px rgba(46, 204, 113, 0.2);
 }
 
 .hero-text p {
@@ -298,12 +314,13 @@ header {
     transition: var(--transition);
     display: inline-block;
     cursor: pointer;
+    backdrop-filter: blur(8px);
 }
 
 .btn-secondary:hover {
     background: rgba(46, 204, 113, 0.1);
     border-color: var(--accent-green);
-    box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);
+    box-shadow: 0 0 25px rgba(46, 204, 113, 0.4);
     transform: translateY(-2px);
 }
 
@@ -326,7 +343,7 @@ header {
     width: 100%;
     max-width: 350px;
     height: auto;
-    filter: drop-shadow(0 0 40px rgba(46, 204, 113, 0.4));
+    filter: drop-shadow(0 0 50px rgba(46, 204, 113, 0.6));
     position: relative;
     z-index: 1;
 }
@@ -335,11 +352,17 @@ header {
 .hero-image::before {
     content: '';
     position: absolute;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(46, 204, 113, 0.15) 0%, transparent 70%);
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(46, 204, 113, 0.25) 0%, rgba(46, 204, 113, 0.08) 40%, transparent 70%);
     border-radius: 50%;
     z-index: 0;
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; }
 }
 
 .floating {
@@ -370,6 +393,7 @@ header {
     color: var(--text-white);
     margin-bottom: 10px;
     font-weight: 700;
+    text-shadow: 0 0 20px rgba(46, 204, 113, 0.2);
 }
 
 .underline {
@@ -378,7 +402,9 @@ header {
     background: var(--accent-green);
     margin: 0 auto 20px;
     border-radius: 2px;
-    box-shadow: 0 0 15px var(--accent-green), 0 0 30px rgba(46, 204, 113, 0.5);
+    box-shadow: 
+        0 0 15px var(--accent-green),
+        0 0 30px rgba(46, 204, 113, 0.6);
 }
 
 .section-header p {
@@ -411,8 +437,9 @@ header {
     transform: translateX(-50%);
     width: 0;
     height: 3px;
-    background: var(--accent-green);
-    transition: width 0.4s ease;
+    background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+    transition: width 0.5s ease;
+    box-shadow: 0 0 20px var(--accent-green);
 }
 
 .step-card:hover::before {
@@ -422,14 +449,18 @@ header {
 .step-card:hover {
     transform: translateY(-10px);
     border-color: var(--accent-green);
-    box-shadow: 0 0 40px rgba(46, 204, 113, 0.25);
+    box-shadow: 
+        0 0 50px rgba(46, 204, 113, 0.35),
+        inset 0 0 60px rgba(46, 204, 113, 0.05);
 }
 
 .step-icon {
     font-size: 2.5rem;
     color: var(--accent-yellow);
     margin-bottom: 20px;
-    text-shadow: 0 0 15px rgba(244, 196, 48, 0.6), 0 0 30px rgba(244, 196, 48, 0.3);
+    text-shadow: 
+        0 0 20px rgba(244, 196, 48, 0.7),
+        0 0 40px rgba(244, 196, 48, 0.4);
 }
 
 .step-card h3 {
@@ -463,21 +494,26 @@ header {
 
 .service-card:hover {
     border-color: var(--accent-yellow);
-    box-shadow: 0 0 30px rgba(244, 196, 48, 0.25);
-    transform: translateY(-5px);
+    box-shadow: 
+        0 0 40px rgba(244, 196, 48, 0.3),
+        inset 0 0 60px rgba(244, 196, 48, 0.05);
+    transform: translateY(-8px);
 }
 
 .service-card i {
     font-size: 2rem;
     color: var(--accent-green);
     margin-bottom: 15px;
-    text-shadow: 0 0 15px rgba(46, 204, 113, 0.5);
+    text-shadow: 0 0 20px rgba(46, 204, 113, 0.7);
     transition: var(--transition);
 }
 
 .service-card:hover i {
     color: var(--accent-yellow);
-    text-shadow: 0 0 20px rgba(244, 196, 48, 0.6);
+    text-shadow: 
+        0 0 25px rgba(244, 196, 48, 0.8),
+        0 0 50px rgba(244, 196, 48, 0.4);
+    transform: scale(1.1);
 }
 
 .service-card h3 {
@@ -509,15 +545,27 @@ header {
 
 .feature-item:hover {
     border-color: var(--accent-green);
-    box-shadow: 0 0 35px rgba(46, 204, 113, 0.25);
-    transform: translateY(-5px);
+    box-shadow: 
+        0 0 45px rgba(46, 204, 113, 0.35),
+        inset 0 0 60px rgba(46, 204, 113, 0.05);
+    transform: translateY(-8px);
 }
 
 .feature-item i {
     font-size: 2.5rem;
     color: var(--accent-yellow);
     margin-bottom: 20px;
-    text-shadow: 0 0 15px rgba(244, 196, 48, 0.5);
+    text-shadow: 
+        0 0 20px rgba(244, 196, 48, 0.7),
+        0 0 40px rgba(244, 196, 48, 0.3);
+    transition: var(--transition);
+}
+
+.feature-item:hover i {
+    transform: scale(1.1);
+    text-shadow: 
+        0 0 30px rgba(244, 196, 48, 0.9),
+        0 0 60px rgba(244, 196, 48, 0.5);
 }
 
 .feature-item h3 {
@@ -546,6 +594,7 @@ header {
     overflow: hidden;
 }
 
+/* Rotating radial glow */
 .download-content::before {
     content: '';
     position: absolute;
@@ -553,9 +602,10 @@ header {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(46, 204, 113, 0.08) 0%, transparent 60%);
-    animation: rotate 20s linear infinite;
+    background: radial-gradient(circle, rgba(46, 204, 113, 0.15) 0%, transparent 55%);
+    animation: rotate 25s linear infinite;
     z-index: -1;
+    pointer-events: none;
 }
 
 @keyframes rotate {
@@ -568,6 +618,7 @@ header {
     color: var(--text-white);
     margin-bottom: 15px;
     font-weight: 700;
+    text-shadow: 0 0 25px rgba(46, 204, 113, 0.3);
 }
 
 .download-content p {
@@ -586,12 +637,13 @@ header {
 /* --- FOOTER --- */
 /* ===================================================== */
 footer {
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.7);
     padding: 40px 0;
     text-align: center;
     border-top: 1px solid var(--glass-border);
     position: relative;
     z-index: 10;
+    backdrop-filter: blur(10px);
 }
 
 .footer-content {
@@ -610,6 +662,10 @@ footer {
     font-size: 1.2rem;
 }
 
+.footer-logo img {
+    filter: drop-shadow(0 0 10px rgba(46, 204, 113, 0.5));
+}
+
 .social-links {
     display: flex;
     gap: 20px;
@@ -623,18 +679,20 @@ footer {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     border: 1px solid var(--glass-border);
+    background: rgba(46, 204, 113, 0.05);
 }
 
 .social-links a:hover {
     color: var(--accent-green);
-    text-shadow: 0 0 10px var(--accent-green);
+    text-shadow: 0 0 15px var(--accent-green);
     border-color: var(--accent-green);
     box-shadow: var(--glow-green);
     transform: translateY(-3px);
+    background: rgba(46, 204, 113, 0.15);
 }
 
 /* ===================================================== */
@@ -648,9 +706,9 @@ footer {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background-color: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     justify-content: center;
     align-items: center;
     padding: 20px;
@@ -664,7 +722,9 @@ footer {
     position: relative;
     border: 1px solid var(--accent-green);
     border-radius: var(--border-radius);
-    box-shadow: 0 0 60px rgba(46, 204, 113, 0.3), inset 0 0 60px rgba(46, 204, 113, 0.05);
+    box-shadow: 
+        0 0 80px rgba(46, 204, 113, 0.4),
+        inset 0 0 80px rgba(46, 204, 113, 0.06);
     animation: slideUp 0.4s ease-out;
 }
 
@@ -682,8 +742,8 @@ footer {
     color: var(--text-grey);
     transition: var(--transition);
     line-height: 1;
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -692,8 +752,9 @@ footer {
 
 .close-btn:hover {
     color: var(--accent-green);
-    background: rgba(46, 204, 113, 0.1);
-    text-shadow: 0 0 15px var(--accent-green);
+    background: rgba(46, 204, 113, 0.15);
+    text-shadow: 0 0 20px var(--accent-green);
+    box-shadow: var(--glow-green);
 }
 
 .modal-header {
@@ -704,13 +765,14 @@ footer {
 .modal-logo {
     height: 60px;
     margin-bottom: 15px;
-    filter: drop-shadow(0 0 20px rgba(46, 204, 113, 0.5));
+    filter: drop-shadow(0 0 25px rgba(46, 204, 113, 0.6));
 }
 
 .modal-header h2 {
     color: var(--text-white);
     font-size: 1.5rem;
     font-weight: 700;
+    text-shadow: 0 0 20px rgba(46, 204, 113, 0.3);
 }
 
 .modal-body p {
@@ -731,6 +793,7 @@ footer {
 
 .install-steps strong {
     color: var(--accent-green);
+    text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
 }
 
 .security-warning {
@@ -745,6 +808,7 @@ footer {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    box-shadow: inset 0 0 20px rgba(244, 196, 48, 0.05);
 }
 
 /* ===================================================== */
@@ -844,7 +908,9 @@ html[lang="am"] .nav-links a {
         padding: 20px;
         border-radius: var(--border-radius);
         gap: 15px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        box-shadow: 
+            0 10px 40px rgba(0, 0, 0, 0.6),
+            0 0 30px rgba(46, 204, 113, 0.2);
     }
     
     .nav-links.active { 
@@ -938,9 +1004,10 @@ html[lang="am"] [style*="background: #1B4D3E"] {
     background: var(--primary-green);
     border-radius: 5px;
     border: 2px solid var(--bg-dark);
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--accent-green);
-    box-shadow: 0 0 10px var(--accent-green);
+    box-shadow: 0 0 15px var(--accent-green);
 }
