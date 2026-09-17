@@ -166,44 +166,40 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 // 1. SUPER-GLOWING STARFIELD - Maximum Shine & Intensity
 // =====================================================
 
-// Create an EXTREMELY glowing star texture with wide halo
 function createStarTexture() {
     const canvas = document.createElement('canvas');
-    canvas.width = 256;  // Larger canvas for smoother gradient
+    canvas.width = 256;
     canvas.height = 256;
     const ctx = canvas.getContext('2d');
     
-    // MASSIVELY enhanced radial gradient with more layers
     const gradient = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
-    gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');        // Pure white HOT core
-    gradient.addColorStop(0.05, 'rgba(255, 255, 255, 1)');      // Wider pure white
-    gradient.addColorStop(0.1, 'rgba(230, 255, 240, 1)');       // Near-white mint
-    gradient.addColorStop(0.18, 'rgba(180, 255, 215, 1)');      // Bright mint
-    gradient.addColorStop(0.28, 'rgba(100, 255, 180, 1)');      // Vivid green-mint
-    gradient.addColorStop(0.42, 'rgba(46, 204, 113, 0.9)');     // Brand green, still strong
-    gradient.addColorStop(0.55, 'rgba(46, 204, 113, 0.55)');    // Glow halo
-    gradient.addColorStop(0.7, 'rgba(46, 204, 113, 0.25)');     // Wide soft halo
-    gradient.addColorStop(0.85, 'rgba(46, 204, 113, 0.08)');    // Fading
-    gradient.addColorStop(1, 'rgba(46, 204, 113, 0)');          // Fully transparent
+    gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+    gradient.addColorStop(0.05, 'rgba(255, 255, 255, 1)');
+    gradient.addColorStop(0.1, 'rgba(230, 255, 240, 1)');
+    gradient.addColorStop(0.18, 'rgba(180, 255, 215, 1)');
+    gradient.addColorStop(0.28, 'rgba(100, 255, 180, 1)');
+    gradient.addColorStop(0.42, 'rgba(46, 204, 113, 0.9)');
+    gradient.addColorStop(0.55, 'rgba(46, 204, 113, 0.55)');
+    gradient.addColorStop(0.7, 'rgba(46, 204, 113, 0.25)');
+    gradient.addColorStop(0.85, 'rgba(46, 204, 113, 0.08)');
+    gradient.addColorStop(1, 'rgba(46, 204, 113, 0)');
     
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 256, 256);
     
-    const texture = new THREE.CanvasTexture(canvas);
-    return texture;
+    return new THREE.CanvasTexture(canvas);
 }
 
 const starTexture = createStarTexture();
 
-// Create the starfield
 const starGeometry = new THREE.BufferGeometry();
 const starVertices = [];
 const starColors = [];
 const starSizes = [];
 const starPhases = [];
-const starGlowIntensity = []; // NEW: per-star glow boost
+const starGlowIntensity = [];
 
-const starCount = 2000; // Increased density
+const starCount = 2000;
 
 for (let i = 0; i < starCount; i++) {
     starVertices.push(
@@ -212,32 +208,22 @@ for (let i = 0; i < starCount; i++) {
         Math.random() * 70 - 35
     );
     
-    // Rich color palette with BRIGHTER versions
     const colorChoice = Math.random();
     let r, g, b;
     if (colorChoice < 0.4) {
-        // Super bright white-green (biggest shine)
         r = 1.0; g = 1.0; b = 1.0;
     } else if (colorChoice < 0.72) {
-        // Bright mint green
         r = 0.5; g = 1.0; b = 0.75;
     } else if (colorChoice < 0.9) {
-        // Lighter brand green
         r = 0.35; g = 0.95; b = 0.55;
     } else {
-        // Bright gold accent
         r = 1.0; g = 0.9; b = 0.4;
     }
     starColors.push(r, g, b);
     
-    // BIGGER sizes for stronger presence
-    starSizes.push(Math.random() * 2.0 + 1.0); // Range: 1.0 to 3.0
-    
-    // Random phase for twinkle animation
+    starSizes.push(Math.random() * 2.0 + 1.0);
     starPhases.push(Math.random() * Math.PI * 2);
-    
-    // Random glow intensity for variety
-    starGlowIntensity.push(Math.random() * 0.8 + 1.2); // 1.2 to 2.0
+    starGlowIntensity.push(Math.random() * 0.8 + 1.2);
 }
 
 starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
@@ -246,12 +232,11 @@ starGeometry.setAttribute('size', new THREE.Float32BufferAttribute(starSizes, 1)
 starGeometry.setAttribute('phase', new THREE.Float32BufferAttribute(starPhases, 1));
 starGeometry.setAttribute('glowIntensity', new THREE.Float32BufferAttribute(starGlowIntensity, 1));
 
-// Shader material with ENHANCED GLOW & TWINKLE
 const starMaterial = new THREE.ShaderMaterial({
     uniforms: {
         pointTexture: { value: starTexture },
         time: { value: 0 },
-        sizeMultiplier: { value: 25.0 } // MUCH bigger stars (was 15.0)
+        sizeMultiplier: { value: 25.0 }
     },
     vertexShader: `
         attribute float size;
@@ -267,13 +252,8 @@ const starMaterial = new THREE.ShaderMaterial({
         void main() {
             vColor = color;
             vGlow = glowIntensity;
-            
-            // Stronger twinkle with wider range
             vTwinkle = 0.6 + 0.4 * sin(time * 2.5 + phase);
-            
             vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-            
-            // Size boosted by twinkle AND glow intensity
             gl_PointSize = size * sizeMultiplier * vTwinkle * vGlow * (300.0 / -mvPosition.z);
             gl_Position = projectionMatrix * mvPosition;
         }
@@ -286,16 +266,9 @@ const starMaterial = new THREE.ShaderMaterial({
         
         void main() {
             vec4 texColor = texture2D(pointTexture, gl_PointCoord);
-            
-            // MASSIVE brightness boost
-            // Final color = base color * (1 + twinkle boost + glow boost)
             float brightness = 1.0 + (vTwinkle * 1.5) + (vGlow * 0.5);
             vec3 finalColor = vColor * brightness;
-            
-            // Apply texture (with its own glow halo baked in)
             gl_FragColor = vec4(finalColor, 1.0) * texColor;
-            
-            // Discard only fully transparent pixels
             if (gl_FragColor.a < 0.01) discard;
         }
     `,
@@ -308,10 +281,6 @@ const stars = new THREE.Points(starGeometry, starMaterial);
 scene.add(stars);
 
 const starStartTime = Date.now();
-
-// =====================================================
-// END SUPER-GLOWING STARFIELD
-// =====================================================
 
 // =====================================================
 // 2. FLOATING PROFESSION ICONS
@@ -450,7 +419,6 @@ function animate() {
     stars.rotation.y += 0.0003;
     stars.rotation.x += 0.00015;
     
-    // UPDATE TWINKLE & GLOW ANIMATION
     starMaterial.uniforms.time.value = (Date.now() - starStartTime) * 0.001;
     
     const boundary = 55; 
@@ -509,4 +477,58 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 });
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            const headerOffset = 80;
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
+        }
+    });
+});
+
+
+// =====================================================
+// --- DOWNLOAD MODAL LOGIC ---
+// =====================================================
+
+const modal = document.getElementById('downloadModal');
+const downloadBtn = document.getElementById('actualDownloadBtn');
+
+// -----------------------------------------------------
+// YOUR GOOGLE DRIVE FILE ID
+// -----------------------------------------------------
+// Extracted from: https://drive.google.com/file/d/11r0shD35X-ePKzPZXKDV0hoWdZaKX7g2/view
+const DRIVE_FILE_ID = "11r0shD35X-ePKzPZXKDV0hoWdZaKX7g2";
+
+// Direct download link — pushes APK to browser immediately
+// Works on desktop. On some Android phones, may still open Drive.
+const DIRECT_DOWNLOAD_URL = `https://drive.google.com/uc?export=download&id=${DRIVE_FILE_ID}`;
+
+// Fallback preview link (if direct download fails)
+const FALLBACK_DRIVE_URL = `https://drive.google.com/file/d/${DRIVE_FILE_ID}/view`;
+
+
+function openDownloadModal() {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeDownloadModal() {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        closeDownloadModal();
+    }
