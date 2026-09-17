@@ -202,30 +202,154 @@ function applyLanguage(lang) {
 // =====================================================
 
 
-// --- Three.js Space Background with Floating Profession Icons ---
+// =====================================================
+// --- THREE.JS SPACE BACKGROUND ---
+// =====================================================
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg-canvas'), alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
-// 1. Create a Starfield (Tiny Particles)
+// =====================================================
+// 1. ULTRA-SHINY STARFIELD - Bigger, Brighter, Twinkling
+// =====================================================
+
+// Create a bigger, brighter glowing star texture
+function createStarTexture() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 128;
+    canvas.height = 128;
+    const ctx = canvas.getContext('2d');
+    
+    // Larger, more intense radial gradient
+    const gradient = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+    gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');       // Pure white hot core
+    gradient.addColorStop(0.08, 'rgba(255, 255, 255, 1)');     // Wider white center
+    gradient.addColorStop(0.2, 'rgba(180, 255, 220, 1)');      // Bright mint
+    gradient.addColorStop(0.35, 'rgba(46, 204, 113, 1)');      // Brand green
+    gradient.addColorStop(0.6, 'rgba(46, 204, 113, 0.4)');     // Green glow halo
+    gradient.addColorStop(0.85, 'rgba(46, 204, 113, 0.1)');    // Fading edge
+    gradient.addColorStop(1, 'rgba(46, 204, 113, 0)');         // Fully transparent
+    
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 128, 128);
+    
+    const texture = new THREE.CanvasTexture(canvas);
+    return texture;
+}
+
+const starTexture = createStarTexture();
+
+// Create the starfield with MORE color variety and BIGGER sizes
 const starGeometry = new THREE.BufferGeometry();
 const starVertices = [];
-for (let i = 0; i < 1500; i++) {
-    starVertices.push(Math.random() * 50 - 25, Math.random() * 50 - 25, Math.random() * 50 - 25);
+const starColors = [];
+const starSizes = [];
+const starPhases = []; // For twinkling
+
+const starCount = 1500; // More stars
+
+for (let i = 0; i < starCount; i++) {
+    starVertices.push(
+        Math.random() * 70 - 35, 
+        Math.random() * 70 - 35, 
+        Math.random() * 70 - 35
+    );
+    
+    // Rich color palette: white-hot, mint-green, brand green, gold
+    const colorChoice = Math.random();
+    let r, g, b;
+    if (colorChoice < 0.35) {
+        // Pure bright white-green (biggest shine)
+        r = 0.85; g = 1.0; b = 0.9;
+    } else if (colorChoice < 0.7) {
+        // Bright mint green
+        r = 0.4; g = 1.0; b = 0.65;
+    } else if (colorChoice < 0.9) {
+        // Brand green
+        r = 0.18; g = 0.8; b = 0.44;
+    } else {
+        // Gold accent
+        r = 1.0; g = 0.82; b = 0.25;
+    }
+    starColors.push(r, g, b);
+    
+    // MUCH bigger size range (3x larger than before)
+    starSizes.push(Math.random() * 1.7 + 0.8); // Range: 0.8 to 2.5
+    
+    // Random phase for twinkle animation
+    starPhases.push(Math.random() * Math.PI * 2);
 }
+
 starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-const starMaterial = new THREE.PointsMaterial({ 
-    color: 0x2ecc71, 
-    size: 0.04, 
-    transparent: true, 
-    opacity: 0.4 
+starGeometry.setAttribute('color', new THREE.Float32BufferAttribute(starColors, 3));
+starGeometry.setAttribute('size', new THREE.Float32BufferAttribute(starSizes, 1));
+starGeometry.setAttribute('phase', new THREE.Float32BufferAttribute(starPhases, 1));
+
+// Shader material with TWINKLING animation
+const starMaterial = new THREE.ShaderMaterial({
+    uniforms: {
+        pointTexture: { value: starTexture },
+        time: { value: 0 },
+        sizeMultiplier: { value: 15.0 } // Global size control
+    },
+    vertexShader: `
+        attribute float size;
+        attribute vec3 color;
+        attribute float phase;
+        varying vec3 vColor;
+        varying float vTwinkle;
+        uniform float time;
+        uniform float sizeMultiplier;
+        
+        void main() {
+            vColor = color;
+            
+            // Twinkle animation: each star pulses at its own phase
+            vTwinkle = 0.7 + 0.3 * sin(time * 2.0 + phase);
+            
+            vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+            gl_PointSize = size * sizeMultiplier * vTwinkle * (300.0 / -mvPosition.z);
+            gl_Position = projectionMatrix * mvPosition;
+        }
+    `,
+    fragmentShader: `
+        uniform sampler2D pointTexture;
+        varying vec3 vColor;
+        varying float vTwinkle;
+        
+        void main() {
+            vec4 texColor = texture2D(pointTexture, gl_PointCoord);
+            
+            // Boost brightness using the twinkle value
+            vec3 finalColor = vColor * (1.0 + vTwinkle * 0.8);
+            
+            gl_FragColor = vec4(finalColor, 1.0) * texColor;
+            
+            // Discard fully transparent pixels
+            if (gl_FragColor.a < 0.02) discard;
+        }
+    `,
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending
 });
+
 const stars = new THREE.Points(starGeometry, starMaterial);
 scene.add(stars);
 
-// 2. Icon List (Music Note Removed)
+// Store start time for animation
+const starStartTime = Date.now();
+
+// =====================================================
+// END ULTRA-SHINY STARFIELD
+// =====================================================
+
+// =====================================================
+// 2. FLOATING PROFESSION ICONS
+// =====================================================
+
 const iconList = [
     // --- CUSTOM SVG ICONS ---
     { type: 'svg', name: 'broom', path: 'M 70 10 L 58 60 L 62 60 L 74 10 Z M 45 60 Q 30 60 25 80 L 75 80 Q 70 60 55 60 Z M 25 80 L 20 95 L 80 95 L 75 80 Z' },
@@ -376,11 +500,19 @@ function initFloatingIcons() {
 
 camera.position.z = 12;
 
+// =====================================================
+// 3. ANIMATION LOOP
+// =====================================================
+
 function animate() {
     requestAnimationFrame(animate);
     
-    stars.rotation.y += 0.0002;
-    stars.rotation.x += 0.0001;
+    // Slowly rotate the starfield
+    stars.rotation.y += 0.0003;
+    stars.rotation.x += 0.00015;
+    
+    // UPDATE TWINKLE ANIMATION
+    starMaterial.uniforms.time.value = (Date.now() - starStartTime) * 0.001;
     
     const boundary = 55; 
     
@@ -428,6 +560,10 @@ window.addEventListener('resize', () => {
 });
 
 
+// =====================================================
+// --- UI INTERACTIONS ---
+// =====================================================
+
 // --- Mobile Menu Toggle ---
 function toggleMobileMenu() {
     const navLinks = document.querySelector('.nav-links');
@@ -449,146 +585,3 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         if (targetId === '#') return;
         
         const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            const headerOffset = 80;
-            const elementPosition = targetElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: "smooth"
-            });
-        }
-    });
-});
-
-
-// --- Download Modal Logic ---
-const modal = document.getElementById('downloadModal');
-const downloadBtn = document.getElementById('actualDownloadBtn');
-
-// IMPORTANT: Replace with your actual secure backend endpoint
-// Never expose the direct APK URL in client-side code
-const SECURE_DOWNLOAD_ENDPOINT = "https://your-server.com/api/download/koroso"; 
-
-function openDownloadModal() {
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-}
-
-function closeDownloadModal() {
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-}
-
-window.onclick = function(event) {
-    if (event.target == modal) {
-        closeDownloadModal();
-    }
-}
-
-// Handle the download with feedback and language support
-downloadBtn.addEventListener('click', async function() {
-    const originalText = this.innerHTML;
-    const t = translations[currentLang];
-    
-    // Step 1: Detect device
-    const isAndroid = /android/i.test(navigator.userAgent);
-    
-    if (!isAndroid) {
-        this.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${t.modal_android_only}`;
-        setTimeout(() => {
-            this.innerHTML = originalText;
-        }, 3000);
-        return;
-    }
-    
-    // Step 2: Show loading state
-    this.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${t.modal_downloading}`;
-    this.disabled = true;
-    
-    // Step 3: Simulate fetching a secure temporary download URL
-    // In production, this should be a real fetch to your backend
-    setTimeout(() => {
-        // Trigger download
-        const link = document.createElement('a');
-        link.href = SECURE_DOWNLOAD_ENDPOINT;
-        link.download = 'KOROSO.apk';
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        // Step 4: Show success message
-        this.innerHTML = `<i class="fas fa-check"></i> ${t.modal_downloaded}`;
-        
-        // Step 5: Show toast with next steps
-        setTimeout(() => {
-            showInstallInstructions();
-            closeDownloadModal();
-            this.innerHTML = originalText;
-            this.disabled = false;
-        }, 1500);
-        
-    }, 1000);
-});
-
-// Show install instructions toast (bilingual support)
-function showInstallInstructions() {
-    const t = translations[currentLang];
-    
-    const toast = document.createElement('div');
-    toast.className = 'toast-notification';
-    toast.style.cssText = `
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #1B4D3E;
-        color: white;
-        padding: 20px 30px;
-        border-radius: 12px;
-        box-shadow: 0 10px 40px rgba(46, 204, 113, 0.4);
-        z-index: 3000;
-        max-width: 90%;
-        text-align: center;
-        border: 1px solid #2ecc71;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        animation: slideUp 0.3s ease-out;
-    `;
-    toast.innerHTML = `
-        <strong style="color: #F4C430;">${t.modal_toast_title}</strong><br>
-        <small>${t.modal_toast_steps}</small>
-    `;
-    document.body.appendChild(toast);
-    
-    setTimeout(() => {
-        toast.style.transition = 'opacity 0.5s ease';
-        toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 500);
-    }, 8000);
-}
-
-
-// --- Scroll Animations ---
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px"
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-            observer.unobserve(entry.target);
-        }
-    });
-}, observerOptions);
-
-document.querySelectorAll('.step-card, .service-card, .feature-item').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-    observer.observe(el);
-});
