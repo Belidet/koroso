@@ -4,19 +4,14 @@
 
 const translations = {
     en: {
-        // Navigation
         nav_how: "How it Works",
         nav_services: "Services",
         nav_why: "Why KOROSO",
         nav_download: "Download App",
-        
-        // Hero
         hero_title: 'Find the Right Skills, <span class="highlight">Right Now.</span>',
         hero_subtitle: "KOROSO connects you with verified local professionals—from accountants to technicians—instantly. Whether you need a service or want to offer one, we make it happen.",
         btn_download: "Download for Android",
         btn_learn: "Learn More",
-        
-        // How it Works
         how_title: "How It Works",
         how_subtitle: "Simple steps to get your job done or find your next gig.",
         step1_title: "1. Create Profile",
@@ -25,8 +20,6 @@ const translations = {
         step2_desc: "Explore a wide range of categories or let clients find you based on your profession.",
         step3_title: "3. Connect & Hire",
         step3_desc: "Chat securely, agree on terms, and get the job done efficiently.",
-        
-        // Services
         services_title: "Available Professionals",
         services_subtitle: "Whatever you need, KOROSO has a verified expert for it.",
         serv_accountant: "Accountants",
@@ -41,8 +34,6 @@ const translations = {
         serv_painter_desc: "Interior and exterior painting for homes and offices.",
         serv_mover: "Movers",
         serv_mover_desc: "Safe and efficient relocation services.",
-        
-        // Why KOROSO
         why_title: "Why Choose KOROSO?",
         why1_title: "Verified Profiles",
         why1_desc: "We verify IDs and skills so you can hire with confidence.",
@@ -50,17 +41,11 @@ const translations = {
         why2_desc: "Communicate safely within the app before sharing personal details.",
         why3_title: "Local Professionals",
         why3_desc: "Find talent right in your neighborhood for faster service.",
-        
-        // Download Section
         dl_title: "Ready to get started?",
         dl_subtitle: "Download the KOROSO app today and join the community.",
         dl_button: "Install KOROSO APK",
         dl_note: "Android 8.0+ required. Safe and secure installation.",
-        
-        // Footer
         footer_copy: "&copy; 2024 KOROSO. All rights reserved.",
-        
-        // Modal
         modal_title: "Install KOROSO",
         modal_intro: "To install the app, please follow these steps:",
         modal_step1: 'Tap the <strong>Download APK</strong> button below.',
@@ -76,19 +61,14 @@ const translations = {
         modal_toast_steps: "1. Open your <b>Notifications</b> or <b>Downloads</b><br>2. Tap the <b>KOROSO.apk</b> file<br>3. Allow installation if prompted<br>4. Open KOROSO and start hiring!"
     },
     am: {
-        // Navigation
         nav_how: "እንዴት እንደሚሰራ",
         nav_services: "አገልግሎቶች",
         nav_why: "ለምን KOROSO",
         nav_download: "አፑን ያውርዱ",
-        
-        // Hero
         hero_title: 'ትክክለኛውን ክህሎት ያግኙ፣ <span class="highlight">ወዲያውኑ።</span>',
         hero_subtitle: "KOROSO ከተረጋገጡ የአካባቢ ባለሙያዎች ጋር ወዲያውኑ ያገናኝዎታል—ከሂሳብ ባለሙያዎች እስከ ቴክኒሻኖች። አገልግሎት ከፈለጉ ወይም ማቅረብ ከፈለጉ፣ እኛ እናደርገዋለን።",
         btn_download: "ለ Android ያውርዱ",
         btn_learn: "ተጨማሪ ይወቁ",
-        
-        // How it Works
         how_title: "እንዴት እንደሚሰራ",
         how_subtitle: "ስራዎን ለማከናወን ወይም ቀጣዩን ስራዎን ለማግኘት ቀላል ደረጃዎች።",
         step1_title: "1. መገለጫ ይፍጠሩ",
@@ -97,8 +77,6 @@ const translations = {
         step2_desc: "ሰፊ ምድቦችን ያስሱ ወይም ደንበኞች በሙያዎ እንዲያገኙዎት ይፍቀዱ።",
         step3_title: "3. ይገናኙ እና ይቅጠሩ",
         step3_desc: "በደህንነት ይወያዩ፣ በውሎች ይስማሙ እና ስራውን በብቃት ያጠናቅቁ።",
-        
-        // Services
         services_title: "የሚገኙ ባለሙያዎች",
         services_subtitle: "የሚፈልጉት ምንም ይሁን፣ KOROSO የተረጋገጠ ባለሙያ አለው።",
         serv_accountant: "የሂሳብ ባለሙያዎች",
@@ -113,8 +91,6 @@ const translations = {
         serv_painter_desc: "ለቤቶች እና ቢሮዎች የውስጥ እና የውጭ ቀለም።",
         serv_mover: "ጠቃሚ ተሸካሚዎች",
         serv_mover_desc: "ደህንነቱ የተጠበቀ እና ቀልጣፋ የመጓጓዣ አገልግሎቶች።",
-        
-        // Why KOROSO
         why_title: "ለምን KOROSO ይምረጡ?",
         why1_title: "የተረጋገጡ መገለጫዎች",
         why1_desc: "መታወቂያዎችን እና ክህሎቶችን እናረጋግጣለን ስለዚህ በልበ ሙሉነት መቅጠር ይችላሉ።",
@@ -122,17 +98,11 @@ const translations = {
         why2_desc: "የግል ዝርዝሮችን ከመጋራትዎ በፊት በአፑ ውስጥ በደህንነት ይግባቡ።",
         why3_title: "የአካባቢ ባለሙያዎች",
         why3_desc: "ለፈጣን አገልግሎት በአካባቢዎ ውስጥ ተሰጥኦ ያግኙ።",
-        
-        // Download Section
         dl_title: "ለመጀመር ተዘጋጅተዋል?",
         dl_subtitle: "የ KOROSO አፕን ዛሬ ያውርዱ እና ማህበረሰቡን ይቀላቀሉ።",
         dl_button: "KOROSO APK ይጫኑ",
         dl_note: "Android 8.0+ ያስፈልጋል። ደህንነቱ የተጠበቀ እና አስተማማኝ ተከላ።",
-        
-        // Footer
         footer_copy: "&copy; 2024 KOROSO. መብቱ በህግ የተጠበቀ ነው።",
-        
-        // Modal
         modal_title: "KOROSO ይጫኑ",
         modal_intro: "አፑን ለመጫን እባክዎ እነዚህን ደረጃዎች ይከተሉ፡",
         modal_step1: 'ከታች ያለውን <strong>APK ያውርዱ</strong> ቁልፍ ይንኩ።',
@@ -149,58 +119,39 @@ const translations = {
     }
 };
 
-// Current language (default: English)
 let currentLang = 'en';
-
-// Check for saved preference
 const savedLang = localStorage.getItem('koroso-lang');
 if (savedLang && translations[savedLang]) {
     currentLang = savedLang;
 }
 
-// Apply language on page load
 document.addEventListener('DOMContentLoaded', () => {
     applyLanguage(currentLang);
 });
 
-// Toggle between languages
 function toggleLanguage() {
     currentLang = currentLang === 'en' ? 'am' : 'en';
     localStorage.setItem('koroso-lang', currentLang);
     applyLanguage(currentLang);
 }
 
-// Apply translation to all elements with data-i18n attribute
 function applyLanguage(lang) {
-    // Update HTML lang attribute (for CSS font switching)
     document.documentElement.lang = lang;
-    
-    // Update all translatable elements
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang][key]) {
             el.innerHTML = translations[lang][key];
         }
     });
-    
-    // Update language toggle button label (show the OTHER language)
     const langLabel = document.getElementById('langLabel');
     if (langLabel) {
         langLabel.textContent = lang === 'en' ? 'አማርኛ' : 'English';
     }
-    
-    // Update page title
     document.title = lang === 'am' 
         ? 'KOROSO | ያገናኙ። ይቅጠሩ። ይቅጠሩ።'
         : 'KOROSO | Connect. Hire. Get Hired.';
-    
     console.log(`Language switched to: ${lang}`);
 }
-
-// =====================================================
-// --- END LANGUAGE SYSTEM ---
-// =====================================================
-
 
 // =====================================================
 // --- THREE.JS SPACE BACKGROUND ---
@@ -212,28 +163,31 @@ const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg-c
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 // =====================================================
-// 1. ULTRA-SHINY STARFIELD - Bigger, Brighter, Twinkling
+// 1. SUPER-GLOWING STARFIELD - Maximum Shine & Intensity
 // =====================================================
 
-// Create a bigger, brighter glowing star texture
+// Create an EXTREMELY glowing star texture with wide halo
 function createStarTexture() {
     const canvas = document.createElement('canvas');
-    canvas.width = 128;
-    canvas.height = 128;
+    canvas.width = 256;  // Larger canvas for smoother gradient
+    canvas.height = 256;
     const ctx = canvas.getContext('2d');
     
-    // Larger, more intense radial gradient
-    const gradient = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
-    gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');       // Pure white hot core
-    gradient.addColorStop(0.08, 'rgba(255, 255, 255, 1)');     // Wider white center
-    gradient.addColorStop(0.2, 'rgba(180, 255, 220, 1)');      // Bright mint
-    gradient.addColorStop(0.35, 'rgba(46, 204, 113, 1)');      // Brand green
-    gradient.addColorStop(0.6, 'rgba(46, 204, 113, 0.4)');     // Green glow halo
-    gradient.addColorStop(0.85, 'rgba(46, 204, 113, 0.1)');    // Fading edge
-    gradient.addColorStop(1, 'rgba(46, 204, 113, 0)');         // Fully transparent
+    // MASSIVELY enhanced radial gradient with more layers
+    const gradient = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
+    gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');        // Pure white HOT core
+    gradient.addColorStop(0.05, 'rgba(255, 255, 255, 1)');      // Wider pure white
+    gradient.addColorStop(0.1, 'rgba(230, 255, 240, 1)');       // Near-white mint
+    gradient.addColorStop(0.18, 'rgba(180, 255, 215, 1)');      // Bright mint
+    gradient.addColorStop(0.28, 'rgba(100, 255, 180, 1)');      // Vivid green-mint
+    gradient.addColorStop(0.42, 'rgba(46, 204, 113, 0.9)');     // Brand green, still strong
+    gradient.addColorStop(0.55, 'rgba(46, 204, 113, 0.55)');    // Glow halo
+    gradient.addColorStop(0.7, 'rgba(46, 204, 113, 0.25)');     // Wide soft halo
+    gradient.addColorStop(0.85, 'rgba(46, 204, 113, 0.08)');    // Fading
+    gradient.addColorStop(1, 'rgba(46, 204, 113, 0)');          // Fully transparent
     
     ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 128, 128);
+    ctx.fillRect(0, 0, 256, 256);
     
     const texture = new THREE.CanvasTexture(canvas);
     return texture;
@@ -241,14 +195,15 @@ function createStarTexture() {
 
 const starTexture = createStarTexture();
 
-// Create the starfield with MORE color variety and BIGGER sizes
+// Create the starfield
 const starGeometry = new THREE.BufferGeometry();
 const starVertices = [];
 const starColors = [];
 const starSizes = [];
-const starPhases = []; // For twinkling
+const starPhases = [];
+const starGlowIntensity = []; // NEW: per-star glow boost
 
-const starCount = 1500; // More stars
+const starCount = 2000; // Increased density
 
 for (let i = 0; i < starCount; i++) {
     starVertices.push(
@@ -257,60 +212,69 @@ for (let i = 0; i < starCount; i++) {
         Math.random() * 70 - 35
     );
     
-    // Rich color palette: white-hot, mint-green, brand green, gold
+    // Rich color palette with BRIGHTER versions
     const colorChoice = Math.random();
     let r, g, b;
-    if (colorChoice < 0.35) {
-        // Pure bright white-green (biggest shine)
-        r = 0.85; g = 1.0; b = 0.9;
-    } else if (colorChoice < 0.7) {
+    if (colorChoice < 0.4) {
+        // Super bright white-green (biggest shine)
+        r = 1.0; g = 1.0; b = 1.0;
+    } else if (colorChoice < 0.72) {
         // Bright mint green
-        r = 0.4; g = 1.0; b = 0.65;
+        r = 0.5; g = 1.0; b = 0.75;
     } else if (colorChoice < 0.9) {
-        // Brand green
-        r = 0.18; g = 0.8; b = 0.44;
+        // Lighter brand green
+        r = 0.35; g = 0.95; b = 0.55;
     } else {
-        // Gold accent
-        r = 1.0; g = 0.82; b = 0.25;
+        // Bright gold accent
+        r = 1.0; g = 0.9; b = 0.4;
     }
     starColors.push(r, g, b);
     
-    // MUCH bigger size range (3x larger than before)
-    starSizes.push(Math.random() * 1.7 + 0.8); // Range: 0.8 to 2.5
+    // BIGGER sizes for stronger presence
+    starSizes.push(Math.random() * 2.0 + 1.0); // Range: 1.0 to 3.0
     
     // Random phase for twinkle animation
     starPhases.push(Math.random() * Math.PI * 2);
+    
+    // Random glow intensity for variety
+    starGlowIntensity.push(Math.random() * 0.8 + 1.2); // 1.2 to 2.0
 }
 
 starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
 starGeometry.setAttribute('color', new THREE.Float32BufferAttribute(starColors, 3));
 starGeometry.setAttribute('size', new THREE.Float32BufferAttribute(starSizes, 1));
 starGeometry.setAttribute('phase', new THREE.Float32BufferAttribute(starPhases, 1));
+starGeometry.setAttribute('glowIntensity', new THREE.Float32BufferAttribute(starGlowIntensity, 1));
 
-// Shader material with TWINKLING animation
+// Shader material with ENHANCED GLOW & TWINKLE
 const starMaterial = new THREE.ShaderMaterial({
     uniforms: {
         pointTexture: { value: starTexture },
         time: { value: 0 },
-        sizeMultiplier: { value: 15.0 } // Global size control
+        sizeMultiplier: { value: 25.0 } // MUCH bigger stars (was 15.0)
     },
     vertexShader: `
         attribute float size;
         attribute vec3 color;
         attribute float phase;
+        attribute float glowIntensity;
         varying vec3 vColor;
         varying float vTwinkle;
+        varying float vGlow;
         uniform float time;
         uniform float sizeMultiplier;
         
         void main() {
             vColor = color;
+            vGlow = glowIntensity;
             
-            // Twinkle animation: each star pulses at its own phase
-            vTwinkle = 0.7 + 0.3 * sin(time * 2.0 + phase);
+            // Stronger twinkle with wider range
+            vTwinkle = 0.6 + 0.4 * sin(time * 2.5 + phase);
             
             vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-            gl_PointSize = size * sizeMultiplier * vTwinkle * (300.0 / -mvPosition.z);
+            
+            // Size boosted by twinkle AND glow intensity
+            gl_PointSize = size * sizeMultiplier * vTwinkle * vGlow * (300.0 / -mvPosition.z);
             gl_Position = projectionMatrix * mvPosition;
         }
     `,
@@ -318,17 +282,21 @@ const starMaterial = new THREE.ShaderMaterial({
         uniform sampler2D pointTexture;
         varying vec3 vColor;
         varying float vTwinkle;
+        varying float vGlow;
         
         void main() {
             vec4 texColor = texture2D(pointTexture, gl_PointCoord);
             
-            // Boost brightness using the twinkle value
-            vec3 finalColor = vColor * (1.0 + vTwinkle * 0.8);
+            // MASSIVE brightness boost
+            // Final color = base color * (1 + twinkle boost + glow boost)
+            float brightness = 1.0 + (vTwinkle * 1.5) + (vGlow * 0.5);
+            vec3 finalColor = vColor * brightness;
             
+            // Apply texture (with its own glow halo baked in)
             gl_FragColor = vec4(finalColor, 1.0) * texColor;
             
-            // Discard fully transparent pixels
-            if (gl_FragColor.a < 0.02) discard;
+            // Discard only fully transparent pixels
+            if (gl_FragColor.a < 0.01) discard;
         }
     `,
     transparent: true,
@@ -339,11 +307,10 @@ const starMaterial = new THREE.ShaderMaterial({
 const stars = new THREE.Points(starGeometry, starMaterial);
 scene.add(stars);
 
-// Store start time for animation
 const starStartTime = Date.now();
 
 // =====================================================
-// END ULTRA-SHINY STARFIELD
+// END SUPER-GLOWING STARFIELD
 // =====================================================
 
 // =====================================================
@@ -351,11 +318,8 @@ const starStartTime = Date.now();
 // =====================================================
 
 const iconList = [
-    // --- CUSTOM SVG ICONS ---
     { type: 'svg', name: 'broom', path: 'M 70 10 L 58 60 L 62 60 L 74 10 Z M 45 60 Q 30 60 25 80 L 75 80 Q 70 60 55 60 Z M 25 80 L 20 95 L 80 95 L 75 80 Z' },
     { type: 'svg', name: 'mop', path: 'M 70 10 L 58 60 L 62 60 L 74 10 Z M 40 60 Q 40 80 30 90 L 70 90 Q 60 80 60 60 Z' },
-    
-    // --- FONT AWESOME ICONS ---
     { type: 'font', class: 'fa-wrench', char: '\uf0ad' },
     { type: 'font', class: 'fa-tools', char: '\uf7d9' },
     { type: 'font', class: 'fa-hammer', char: '\uf6e3' },
@@ -389,45 +353,36 @@ const iconList = [
 const floatingIcons = [];
 const iconCount = 120;
 
-// Function to generate a texture from a FontAwesome character
 function createFontTexture(charCode) {
     const canvas = document.createElement('canvas');
     canvas.width = 128;
     canvas.height = 128;
     const ctx = canvas.getContext('2d');
-    
     ctx.clearRect(0, 0, 128, 128);
     ctx.font = '900 100px "Font Awesome 6 Free"';
     ctx.fillStyle = '#F4C430';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    
     ctx.fillText(charCode, 64, 64);
-    
     const texture = new THREE.CanvasTexture(canvas);
     texture.needsUpdate = true;
     return texture;
 }
 
-// Function to generate a texture from a Custom SVG Path
 function createSvgTexture(svgPath) {
     const canvas = document.createElement('canvas');
     canvas.width = 128;
     canvas.height = 128;
     const ctx = canvas.getContext('2d');
-    
     ctx.clearRect(0, 0, 128, 128);
-    
     const path = new Path2D(svgPath);
     ctx.fillStyle = '#F4C430';
     ctx.fill(path);
-    
     const texture = new THREE.CanvasTexture(canvas);
     texture.needsUpdate = true;
     return texture;
 }
 
-// Initialize Scene AFTER Fonts are Loaded
 document.fonts.ready.then(() => {
     console.log("Fonts loaded. Initializing " + iconCount + " floating icons...");
     initFloatingIcons();
@@ -440,28 +395,22 @@ function randomRange(min, max) {
 function initFloatingIcons() {
     for (let i = 0; i < iconCount; i++) {
         const randomIcon = iconList[Math.floor(Math.random() * iconList.length)];
-        
         let texture;
         if (randomIcon.type === 'svg') {
             texture = createSvgTexture(randomIcon.path);
         } else {
             texture = createFontTexture(randomIcon.char);
         }
-        
         const material = new THREE.SpriteMaterial({ 
             map: texture, 
             transparent: true,
-            opacity: 0.85,
+            opacity: 0.9,
             color: 0xffffff,
             depthTest: false 
         });
-        
         const sprite = new THREE.Sprite(material);
-        
-        // Spawn from Random Edges
         const edge = Math.floor(Math.random() * 4);
         const spawnRange = 50;
-
         if (edge === 0) {
             sprite.position.x = -spawnRange;
             sprite.position.y = randomRange(-spawnRange, spawnRange);
@@ -475,24 +424,15 @@ function initFloatingIcons() {
             sprite.position.y = -spawnRange;
             sprite.position.x = randomRange(-spawnRange, spawnRange);
         }
-        
         sprite.position.z = randomRange(-15, 15);
-        
         const scale = randomRange(1.0, 3.0); 
         sprite.scale.set(scale, scale, 1);
-        
         const speed = randomRange(0.02, 0.07);
         const angle = Math.random() * Math.PI * 2;
-        
         sprite.userData = {
-            velocity: new THREE.Vector3(
-                Math.cos(angle) * speed, 
-                Math.sin(angle) * speed, 
-                0
-            ),
+            velocity: new THREE.Vector3(Math.cos(angle) * speed, Math.sin(angle) * speed, 0),
             rotationSpeed: randomRange(-0.02, 0.02)
         };
-        
         scene.add(sprite);
         floatingIcons.push(sprite);
     }
@@ -507,11 +447,10 @@ camera.position.z = 12;
 function animate() {
     requestAnimationFrame(animate);
     
-    // Slowly rotate the starfield
     stars.rotation.y += 0.0003;
     stars.rotation.x += 0.00015;
     
-    // UPDATE TWINKLE ANIMATION
+    // UPDATE TWINKLE & GLOW ANIMATION
     starMaterial.uniforms.time.value = (Date.now() - starStartTime) * 0.001;
     
     const boundary = 55; 
@@ -524,7 +463,6 @@ function animate() {
         if (Math.abs(icon.position.x) > boundary || Math.abs(icon.position.y) > boundary) {
             const edge = Math.floor(Math.random() * 4);
             const spawnRange = 50;
-            
             if (edge === 0) {
                 icon.position.x = -spawnRange;
                 icon.position.y = randomRange(-spawnRange, spawnRange);
@@ -538,14 +476,9 @@ function animate() {
                 icon.position.y = -spawnRange;
                 icon.position.x = randomRange(-spawnRange, spawnRange);
             }
-            
             const speed = randomRange(0.02, 0.07);
             const angle = Math.random() * Math.PI * 2;
-            icon.userData.velocity.set(
-                Math.cos(angle) * speed, 
-                Math.sin(angle) * speed, 
-                0
-            );
+            icon.userData.velocity.set(Math.cos(angle) * speed, Math.sin(angle) * speed, 0);
         }
     });
     
@@ -564,7 +497,6 @@ window.addEventListener('resize', () => {
 // --- UI INTERACTIONS ---
 // =====================================================
 
-// --- Mobile Menu Toggle ---
 function toggleMobileMenu() {
     const navLinks = document.querySelector('.nav-links');
     navLinks.classList.toggle('active');
@@ -576,12 +508,5 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     });
 });
 
-
-// --- Smooth Scrolling ---
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
+    anchor
