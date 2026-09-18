@@ -505,15 +505,12 @@ const modal = document.getElementById('downloadModal');
 const downloadBtn = document.getElementById('actualDownloadBtn');
 
 // -----------------------------------------------------
-// YOUR GOOGLE DRIVE FILE ID
+// YOUR GOOGLE DRIVE DOWNLOAD LINK
 // -----------------------------------------------------
-// Extracted from: https://drive.google.com/file/d/11r0shD35X-ePKzPZXKDV0hoWdZaKX7g2/view
-const DRIVE_FILE_ID = "11r0shD35X-ePKzPZXKDV0hoWdZaKX7g2";
-
-// IMPORTANT: Google Drive blocks direct downloads triggered by external sites.
-// The reliable solution is to open the Drive preview in a new tab where the
-// user taps Google's own download button.
-const PREVIEW_URL = `https://drive.google.com/file/d/${DRIVE_FILE_ID}/view`;
+// This is your actual shared Google Drive link.
+// When clicked, it opens in a new tab where the user
+// taps Google's own download button to get KOROSO.apk.
+const DRIVE_DOWNLOAD_URL = "https://drive.google.com/file/d/11r0shD35X-ePKzPZXKDV0hoWdZaKX7g2/view?usp=sharing";
 
 
 function openDownloadModal() {
@@ -544,91 +541,4 @@ downloadBtn.addEventListener('click', function() {
         this.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${t.modal_android_only}`;
         setTimeout(() => {
             this.innerHTML = originalText;
-        }, 3000);
-        return;
-    }
-    
-    // Step 2: Show loading state
-    this.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${t.modal_downloading}`;
-    this.disabled = true;
-    
-    // Step 3: Open Google Drive in a new tab
-    setTimeout(() => {
-        window.open(PREVIEW_URL, '_blank');
-        
-        // Step 4: Show success message
-        this.innerHTML = `<i class="fas fa-check"></i> ${t.modal_downloaded}`;
-        
-        // Step 5: Show toast with next steps
-        setTimeout(() => {
-            showInstallInstructions();
-            closeDownloadModal();
-            this.innerHTML = originalText;
-            this.disabled = false;
-        }, 1500);
-        
-    }, 800);
-});
-
-// Show install instructions toast (bilingual support)
-function showInstallInstructions() {
-    const t = translations[currentLang];
-    
-    const toast = document.createElement('div');
-    toast.className = 'toast-notification';
-    toast.style.cssText = `
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #1B4D3E;
-        color: white;
-        padding: 20px 30px;
-        border-radius: 12px;
-        box-shadow: 0 10px 40px rgba(46, 204, 113, 0.5);
-        z-index: 3000;
-        max-width: 90%;
-        text-align: center;
-        border: 1px solid #2ecc71;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        animation: slideUp 0.3s ease-out;
-    `;
-    toast.innerHTML = `
-        <strong style="color: #F4C430;">${t.modal_toast_title}</strong><br>
-        <small>${t.modal_toast_steps}</small>
-    `;
-    document.body.appendChild(toast);
-    
-    setTimeout(() => {
-        toast.style.transition = 'opacity 0.5s ease';
-        toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 500);
-    }, 8000);
-}
-
-
-// =====================================================
-// --- SCROLL ANIMATIONS ---
-// =====================================================
-
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px"
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-            observer.unobserve(entry.target);
-        }
-    });
-}, observerOptions);
-
-document.querySelectorAll('.step-card, .service-card, .feature-item').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-    observer.observe(el);
-});
+        }, 
