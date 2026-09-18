@@ -498,18 +498,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 
 // =====================================================
-// --- DOWNLOAD MODAL LOGIC ---
+// --- DOWNLOAD MODAL LOGIC (FIXED) ---
 // =====================================================
+// FIX: We now use a REAL <a> tag with link.click() instead of window.open().
+// This bypasses popup blockers and adware redirects (like torroclk.co).
+// The click is triggered IMMEDIATELY (no setTimeout) so browsers treat it
+// as a genuine user click and cannot intercept it.
 
 const modal = document.getElementById('downloadModal');
 const downloadBtn = document.getElementById('actualDownloadBtn');
 
-// -----------------------------------------------------
-// YOUR GOOGLE DRIVE DOWNLOAD LINK
-// -----------------------------------------------------
-// This is your actual shared Google Drive link.
-// When clicked, it opens in a new tab where the user
-// taps Google's own download button to get KOROSO.apk.
+// Your Google Drive download link
 const DRIVE_DOWNLOAD_URL = "https://drive.google.com/file/d/11r0shD35X-ePKzPZXKDV0hoWdZaKX7g2/view?usp=sharing";
 
 
@@ -529,14 +528,15 @@ window.onclick = function(event) {
     }
 }
 
-// Handle the download with feedback and language support
-downloadBtn.addEventListener('click', function() {
-    const originalText = this.innerHTML;
+// Handle the download — uses REAL <a> tag click, no popup, no redirect hijack
+downloadBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+
     const t = translations[currentLang];
-    
-    // Step 1: Detect device
+    const originalText = this.innerHTML;
+
+    // Device check
     const isAndroid = /android/i.test(navigator.userAgent);
-    
     if (!isAndroid) {
         this.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${t.modal_android_only}`;
         setTimeout(() => {
@@ -544,28 +544,31 @@ downloadBtn.addEventListener('click', function() {
         }, 3000);
         return;
     }
-    
-    // Step 2: Show loading state
-    this.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${t.modal_downloading}`;
+
+    // Create a REAL anchor element — this is treated as a genuine user click,
+    // NOT a popup. Ad injectors and blockers cannot hijack it.
+    const link = document.createElement('a');
+    link.href = DRIVE_DOWNLOAD_URL;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';   // Prevent the new tab from controlling our page
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Show success feedback on the button
+    this.innerHTML = `<i class="fas fa-check"></i> ${t.modal_downloaded}`;
     this.disabled = true;
-    
-    // Step 3: Open Google Drive in a new tab
+
+    // Show install instructions toast and close modal
     setTimeout(() => {
-        window.open(DRIVE_DOWNLOAD_URL, '_blank');
-        
-        // Step 4: Show success message
-        this.innerHTML = `<i class="fas fa-check"></i> ${t.modal_downloaded}`;
-        
-        // Step 5: Show toast with next steps
-        setTimeout(() => {
-            showInstallInstructions();
-            closeDownloadModal();
-            this.innerHTML = originalText;
-            this.disabled = false;
-        }, 1500);
-        
-    }, 800);
+        showInstallInstructions();
+        closeDownloadModal();
+        this.innerHTML = originalText;
+        this.disabled = false;
+    }, 1500);
 });
+
 
 // Show install instructions toast (bilingual support)
 function showInstallInstructions() {
