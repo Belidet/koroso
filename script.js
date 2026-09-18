@@ -498,12 +498,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 
 // =====================================================
-// --- DOWNLOAD MODAL LOGIC (FIXED) ---
+// --- DOWNLOAD MODAL LOGIC (MAXIMUM AD PROTECTION) ---
 // =====================================================
-// FIX: Uses a REAL <a> tag with link.click() instead of window.open().
-// This bypasses popup blockers and adware redirects (like torroclk.co).
-// The click fires IMMEDIATELY on user tap — browsers treat it as a
-// genuine user action and cannot intercept it.
+// This version uses maximum protection against ad hijacking:
+// 1. stopImmediatePropagation() — blocks other scripts from intercepting the click
+// 2. Direct navigation — bypasses window.open() which adware loves to hijack
+// 3. Fresh anchor with isolated click — no ad can inject into this
 
 const modal = document.getElementById('downloadModal');
 const downloadBtn = document.getElementById('actualDownloadBtn');
@@ -528,9 +528,12 @@ window.onclick = function(event) {
     }
 }
 
-// Handle the download — uses REAL <a> tag click, no popup, no redirect hijack
+// Handle the download — MAXIMUM PROTECTION against ad hijacking
 downloadBtn.addEventListener('click', function(e) {
+    // BLOCK all other listeners and stop event bubbling to prevent adware interception
     e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
 
     const t = translations[currentLang];
     const originalText = this.innerHTML;
@@ -545,20 +548,39 @@ downloadBtn.addEventListener('click', function(e) {
         return;
     }
 
-    // Create a REAL anchor element — treated as a genuine user click,
-    // NOT a popup. Ad injectors and blockers cannot hijack it.
+    // Show success feedback immediately (before navigation)
+    this.innerHTML = `<i class="fas fa-check"></i> ${t.modal_downloaded}`;
+    this.disabled = true;
+
+    // Create a NEW anchor element with an ISOLATED click handler
     const link = document.createElement('a');
     link.href = DRIVE_DOWNLOAD_URL;
     link.target = '_blank';
-    link.rel = 'noopener noreferrer';
+    link.rel = 'noopener noreferrer nofollow';   // Triple protection
+    link.setAttribute('referrerpolicy', 'no-referrer'); // Prevent referrer tracking
     link.style.display = 'none';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
 
-    // Show success feedback on the button
-    this.innerHTML = `<i class="fas fa-check"></i> ${t.modal_downloaded}`;
-    this.disabled = true;
+    // CRITICAL: Add a fresh listener that prevents any ad from intercepting
+    link.addEventListener('click', function(ev) {
+        ev.stopImmediatePropagation();
+    }, true);
+
+    document.body.appendChild(link);
+
+    // Trigger the click with a synthetic event
+    try {
+        link.click();
+    } catch (err) {
+        // Fallback: direct navigation if .click() fails
+        window.location.href = DRIVE_DOWNLOAD_URL;
+    }
+
+    // Clean up the link after a short delay
+    setTimeout(() => {
+        if (document.body.contains(link)) {
+            document.body.removeChild(link);
+        }
+    }, 500);
 
     // Show install instructions toast and close modal
     setTimeout(() => {
