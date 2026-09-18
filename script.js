@@ -500,10 +500,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // =====================================================
 // --- DOWNLOAD MODAL LOGIC (FIXED) ---
 // =====================================================
-// FIX: We now use a REAL <a> tag with link.click() instead of window.open().
+// FIX: Uses a REAL <a> tag with link.click() instead of window.open().
 // This bypasses popup blockers and adware redirects (like torroclk.co).
-// The click is triggered IMMEDIATELY (no setTimeout) so browsers treat it
-// as a genuine user click and cannot intercept it.
+// The click fires IMMEDIATELY on user tap — browsers treat it as a
+// genuine user action and cannot intercept it.
 
 const modal = document.getElementById('downloadModal');
 const downloadBtn = document.getElementById('actualDownloadBtn');
@@ -545,12 +545,12 @@ downloadBtn.addEventListener('click', function(e) {
         return;
     }
 
-    // Create a REAL anchor element — this is treated as a genuine user click,
+    // Create a REAL anchor element — treated as a genuine user click,
     // NOT a popup. Ad injectors and blockers cannot hijack it.
     const link = document.createElement('a');
     link.href = DRIVE_DOWNLOAD_URL;
     link.target = '_blank';
-    link.rel = 'noopener noreferrer';   // Prevent the new tab from controlling our page
+    link.rel = 'noopener noreferrer';
     link.style.display = 'none';
     document.body.appendChild(link);
     link.click();
