@@ -54,11 +54,13 @@ const translations = {
         modal_secure: "Your security is our priority. The file is scanned.",
         modal_btn: "Download APK Now",
         modal_downloading: "Preparing Download...",
-        modal_downloaded: "Downloaded! Check Notifications",
+        modal_downloaded: "Download Started!",
         modal_retry: "Try Again",
         modal_android_only: "Android Only",
         modal_toast_title: "📲 Next Steps:",
-        modal_toast_steps: "1. Open your <b>Notifications</b> or <b>Downloads</b><br>2. Tap the <b>KOROSO.apk</b> file<br>3. Allow installation if prompted<br>4. Open KOROSO and start hiring!"
+        modal_toast_steps: "1. Open your <b>Notifications</b> or <b>Downloads</b><br>2. Tap the <b>KOROSO.apk</b> file<br>3. Allow installation if prompted<br>4. Open KOROSO and start hiring!",
+        modal_toast_title_pc: "💻 Next Steps:",
+        modal_toast_steps_pc: "1. The <b>KOROSO.apk</b> file has been saved to your Downloads folder<br>2. Transfer it to your Android phone (via USB, email, or cloud)<br>3. Open it on your phone to install<br>4. Allow installation if prompted"
     },
     am: {
         nav_how: "እንዴት እንደሚሰራ",
@@ -111,11 +113,13 @@ const translations = {
         modal_secure: "ደህንነትዎ ቅድሚያችን ነው። ፋይሉ ተፈትሷል።",
         modal_btn: "APK አሁን ያውርዱ",
         modal_downloading: "ማውረድ በማዘጋጀት ላይ...",
-        modal_downloaded: "ተወርዷል! ማሳወቂያዎችን ይመልከቱ",
+        modal_downloaded: "ማውረድ ተጀምሯል!",
         modal_retry: "እንደገና ይሞክሩ",
         modal_android_only: "ለ Android ብቻ",
         modal_toast_title: "📲 ቀጣይ ደረጃዎች፡",
-        modal_toast_steps: "1. <b>ማሳወቂያዎችዎን</b> ወይም <b>ማውረዶችን</b> ይክፈቱ<br>2. የ <b>KOROSO.apk</b> ፋይልን ይንኩ<br>3. ከተጠየቁ መጫን ይፍቀዱ<br>4. KOROSO ን ይክፈቱ እና መቅጠር ይጀምሩ!"
+        modal_toast_steps: "1. <b>ማሳወቂያዎችዎን</b> ወይም <b>ማውረዶችን</b> ይክፈቱ<br>2. የ <b>KOROSO.apk</b> ፋይልን ይንኩ<br>3. ከተጠየቁ መጫን ይፍቀዱ<br>4. KOROSO ን ይክፈቱ እና መቅጠር ይጀምሩ!",
+        modal_toast_title_pc: "💻 ቀጣይ ደረጃዎች፡",
+        modal_toast_steps_pc: "1. የ <b>KOROSO.apk</b> ፋይል ወደ ማውረዶች አቃፊዎ ተቀምጧል<br>2. ወደ Android ስልክዎ ያስተላልፉ (በ USB፣ ኢሜይል ወይም ደመና)<br>3. በስልክዎ ላይ ይክፈቱት<br>4. ከተጠየቁ መጫን ይፍቀዱ"
     }
 };
 
@@ -498,10 +502,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 
 // =====================================================
-// --- DOWNLOAD MODAL LOGIC (GITHUB DIRECT DOWNLOAD) ---
+// --- DOWNLOAD MODAL LOGIC (WORKS ON PC AND ANDROID) ---
 // =====================================================
-// Uses GitHub Releases — serves the APK directly with NO ads, NO new tabs,
-// NO redirects. This is a true one-tap download.
+// Works on ALL devices:
+// - Android phones → downloads and installs directly
+// - PC / Mac / Linux → downloads the APK file to the Downloads folder
+// - iPhone → downloads the file (user needs to transfer to Android to install)
 
 const modal = document.getElementById('downloadModal');
 const downloadBtn = document.getElementById('actualDownloadBtn');
@@ -528,7 +534,7 @@ window.onclick = function(event) {
     }
 }
 
-// Handle the download — TRUE DIRECT DOWNLOAD (no new tab, no ads)
+// Handle the download — WORKS ON PC AND ANDROID
 downloadBtn.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -537,22 +543,16 @@ downloadBtn.addEventListener('click', function(e) {
     const t = translations[currentLang];
     const originalText = this.innerHTML;
 
-    // Device check
+    // Detect device type
     const isAndroid = /android/i.test(navigator.userAgent);
-    if (!isAndroid) {
-        this.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${t.modal_android_only}`;
-        setTimeout(() => {
-            this.innerHTML = originalText;
-        }, 3000);
-        return;
-    }
 
     // Show success feedback immediately
     this.innerHTML = `<i class="fas fa-check"></i> ${t.modal_downloaded}`;
     this.disabled = true;
 
-    // ---- TRUE DIRECT DOWNLOAD ----
-    // GitHub Releases serves the APK directly — no new tab, no ads, no redirects.
+    // ---- DIRECT DOWNLOAD (works on PC and Android) ----
+    // GitHub Releases serves the file directly. On Android, it saves as an
+    // APK that can be installed. On PC, it saves as a file in Downloads.
     const link = document.createElement('a');
     link.href = APK_DOWNLOAD_URL;
     link.download = 'KOROSO.apk';         // Force download — never navigate away
@@ -564,7 +564,7 @@ downloadBtn.addEventListener('click', function(e) {
 
     // Show install instructions toast and close modal
     setTimeout(() => {
-        showInstallInstructions();
+        showInstallInstructions(isAndroid);
         closeDownloadModal();
         this.innerHTML = originalText;
         this.disabled = false;
@@ -572,9 +572,13 @@ downloadBtn.addEventListener('click', function(e) {
 });
 
 
-// Show install instructions toast (bilingual support)
-function showInstallInstructions() {
+// Show install instructions toast (adapts to device + bilingual)
+function showInstallInstructions(isAndroid) {
     const t = translations[currentLang];
+    
+    // Use different instructions for Android vs PC
+    const title = isAndroid ? t.modal_toast_title : t.modal_toast_title_pc;
+    const steps = isAndroid ? t.modal_toast_steps : t.modal_toast_steps_pc;
     
     const toast = document.createElement('div');
     toast.className = 'toast-notification';
@@ -596,8 +600,8 @@ function showInstallInstructions() {
         animation: slideUp 0.3s ease-out;
     `;
     toast.innerHTML = `
-        <strong style="color: #F4C430;">${t.modal_toast_title}</strong><br>
-        <small>${t.modal_toast_steps}</small>
+        <strong style="color: #F4C430;">${title}</strong><br>
+        <small>${steps}</small>
     `;
     document.body.appendChild(toast);
     
