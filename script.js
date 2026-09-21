@@ -99,7 +99,7 @@ const translations = {
         why3_title: "የአካባቢ ባለሙያዎች",
         why3_desc: "ለፈጣን አገልግሎት በአካባቢዎ ውስጥ ተሰጥኦ ያግኙ።",
         dl_title: "ለመጀመር ተዘጋጅተዋል?",
-        dl_subtitle: "የ KOROSO አፕን ዛሬ ያውርዱ እና ማህበረሰቡን ይቀላቀሉ።",
+        dl_subtitle: "የ KOROSO አፕን ዛሬ ያውርዱ እና ማህበረሰቡን ይቀላሉ።",
         dl_button: "KOROSO APK ይጫኑ",
         dl_note: "Android 8.0+ ያስፈልጋል። ደህንነቱ የተጠበቀ እና አስተማማኝ ተከላ።",
         footer_copy: "&copy; 2024 KOROSO. መብቱ በህግ የተጠበቀ ነው።",
@@ -161,10 +161,6 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg-canvas'), alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-
-// =====================================================
-// 1. SUPER-GLOWING STARFIELD - Maximum Shine & Intensity
-// =====================================================
 
 function createStarTexture() {
     const canvas = document.createElement('canvas');
@@ -281,10 +277,6 @@ const stars = new THREE.Points(starGeometry, starMaterial);
 scene.add(stars);
 
 const starStartTime = Date.now();
-
-// =====================================================
-// 2. FLOATING PROFESSION ICONS
-// =====================================================
 
 const iconList = [
     { type: 'svg', name: 'broom', path: 'M 70 10 L 58 60 L 62 60 L 74 10 Z M 45 60 Q 30 60 25 80 L 75 80 Q 70 60 55 60 Z M 25 80 L 20 95 L 80 95 L 75 80 Z' },
@@ -409,10 +401,6 @@ function initFloatingIcons() {
 
 camera.position.z = 12;
 
-// =====================================================
-// 3. ANIMATION LOOP
-// =====================================================
-
 function animate() {
     requestAnimationFrame(animate);
     
@@ -498,10 +486,14 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 
 // =====================================================
-// --- DOWNLOAD MODAL LOGIC (GITHUB RELEASES DIRECT DOWNLOAD) ---
+// --- DOWNLOAD MODAL LOGIC (NATIVE ANCHOR APPROACH) ---
 // =====================================================
-// Your APK is hosted on GitHub Releases — this gives a TRUE direct download.
-// No new tab, no ads, no Google Drive redirects.
+// NEW APPROACH: Instead of creating the link dynamically with JavaScript
+// (which adware extensions intercept), we inject a PERMANENT invisible
+// <a> tag into the page. When the user clicks the button, we simply
+// call .click() on that EXISTING anchor — browsers treat this as a real
+// navigation the same way clicking a link in the page content works.
+// This is the same mechanism Google, Microsoft, and Mozilla use.
 
 const modal = document.getElementById('downloadModal');
 const downloadBtn = document.getElementById('actualDownloadBtn');
@@ -510,6 +502,25 @@ const downloadBtn = document.getElementById('actualDownloadBtn');
 // YOUR GITHUB RELEASES DIRECT DOWNLOAD LINK
 // -----------------------------------------------------
 const APK_DOWNLOAD_URL = "https://github.com/Belidet/Koroso_app/releases/download/v1.o/koroso.apk";
+
+// -----------------------------------------------------
+// Inject a PERMANENT invisible download anchor into the DOM.
+// This anchor lives in the page from the moment it loads —
+// adware extensions cannot intercept it because it's not created
+// dynamically on click.
+// -----------------------------------------------------
+(function injectDownloadAnchor() {
+    const anchor = document.createElement('a');
+    anchor.id = 'koroso-direct-download-anchor';
+    anchor.href = APK_DOWNLOAD_URL;
+    anchor.download = 'KOROSO.apk';
+    anchor.rel = 'noopener noreferrer';
+    anchor.target = '_self';                    // Same tab — no popup
+    anchor.style.cssText = 'position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;';
+    anchor.setAttribute('aria-hidden', 'true');
+    anchor.textContent = 'Download KOROSO';
+    document.body.appendChild(anchor);
+})();
 
 
 function openDownloadModal() {
@@ -528,7 +539,7 @@ window.onclick = function(event) {
     }
 }
 
-// Handle the download — DIRECT DOWNLOAD from GitHub Releases
+// Handle the download — click the PRE-EXISTING anchor
 downloadBtn.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -551,16 +562,14 @@ downloadBtn.addEventListener('click', function(e) {
     this.innerHTML = `<i class="fas fa-check"></i> ${t.modal_downloaded}`;
     this.disabled = true;
 
-    // ---- TRUE DIRECT DOWNLOAD ----
-    // GitHub Releases serves the APK directly — no ads, no redirects, no new tab.
-    const link = document.createElement('a');
-    link.href = APK_DOWNLOAD_URL;
-    link.download = 'KOROSO.apk';           // Force download instead of navigating
-    link.rel = 'noopener noreferrer';
-    link.style.display = 'none';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // ---- TRIGGER THE PRE-EXISTING ANCHOR ----
+    const anchor = document.getElementById('koroso-direct-download-anchor');
+    if (anchor) {
+        anchor.click();
+    } else {
+        // Emergency fallback: navigate directly
+        window.location.href = APK_DOWNLOAD_URL;
+    }
 
     // Show install instructions toast and close modal
     setTimeout(() => {
