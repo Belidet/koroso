@@ -498,24 +498,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 
 // =====================================================
-// --- DOWNLOAD MODAL LOGIC ---
+// --- DOWNLOAD MODAL LOGIC (GITHUB DIRECT DOWNLOAD) ---
 // =====================================================
-// Link set to sl1nk.com short link.
-//
-// ⚠️ IMPORTANT NOTE:
-// sl1nk.com is an ad-based link shortener. When users click
-// this link, they WILL see ads before the APK download starts.
-// This is how sl1nk.com makes money — it cannot be prevented
-// from the code side.
-//
-// For an ad-free experience, use the GitHub link directly:
-// https://github.com/Belidet/Koroso_app/releases/download/v1.o/koroso.apk
+// Uses GitHub Releases — serves the APK directly with NO ads, NO new tabs,
+// NO redirects. This is a true one-tap download.
 
 const modal = document.getElementById('downloadModal');
 const downloadBtn = document.getElementById('actualDownloadBtn');
 
-// The link the download button opens:
-const APK_DOWNLOAD_URL = "https://sl1nk.com/bh8uniy";
+// -----------------------------------------------------
+// YOUR GITHUB RELEASES DIRECT DOWNLOAD LINK
+// -----------------------------------------------------
+const APK_DOWNLOAD_URL = "https://github.com/Belidet/Koroso_app/releases/download/v1.o/koroso.apk";
 
 
 function openDownloadModal() {
@@ -534,7 +528,7 @@ window.onclick = function(event) {
     }
 }
 
-// Handle the download
+// Handle the download — TRUE DIRECT DOWNLOAD (no new tab, no ads)
 downloadBtn.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -557,9 +551,16 @@ downloadBtn.addEventListener('click', function(e) {
     this.innerHTML = `<i class="fas fa-check"></i> ${t.modal_downloaded}`;
     this.disabled = true;
 
-    // Open the short link in a new tab
-    // (sl1nk.com redirects will happen here — that's unavoidable with this link)
-    window.open(APK_DOWNLOAD_URL, '_blank', 'noopener,noreferrer');
+    // ---- TRUE DIRECT DOWNLOAD ----
+    // GitHub Releases serves the APK directly — no new tab, no ads, no redirects.
+    const link = document.createElement('a');
+    link.href = APK_DOWNLOAD_URL;
+    link.download = 'KOROSO.apk';         // Force download — never navigate away
+    link.rel = 'noopener noreferrer';
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 
     // Show install instructions toast and close modal
     setTimeout(() => {
