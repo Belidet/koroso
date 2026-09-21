@@ -498,18 +498,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 
 // =====================================================
-// --- DOWNLOAD MODAL LOGIC (MAXIMUM AD PROTECTION) ---
+// --- DOWNLOAD MODAL LOGIC (GITHUB RELEASES DIRECT DOWNLOAD) ---
 // =====================================================
-// This version uses maximum protection against ad hijacking:
-// 1. stopImmediatePropagation() — blocks other scripts from intercepting the click
-// 2. Direct navigation — bypasses window.open() which adware loves to hijack
-// 3. Fresh anchor with isolated click — no ad can inject into this
+// Your APK is hosted on GitHub Releases — this gives a TRUE direct download.
+// No new tab, no ads, no Google Drive redirects.
 
 const modal = document.getElementById('downloadModal');
 const downloadBtn = document.getElementById('actualDownloadBtn');
 
-// Your Google Drive download link
-const DRIVE_DOWNLOAD_URL = "https://drive.google.com/file/d/11r0shD35X-ePKzPZXKDV0hoWdZaKX7g2/view?usp=sharing";
+// -----------------------------------------------------
+// YOUR GITHUB RELEASES DIRECT DOWNLOAD LINK
+// -----------------------------------------------------
+const APK_DOWNLOAD_URL = "https://github.com/Belidet/Koroso_app/releases/download/v1.o/koroso.apk";
 
 
 function openDownloadModal() {
@@ -528,9 +528,8 @@ window.onclick = function(event) {
     }
 }
 
-// Handle the download — MAXIMUM PROTECTION against ad hijacking
+// Handle the download — DIRECT DOWNLOAD from GitHub Releases
 downloadBtn.addEventListener('click', function(e) {
-    // BLOCK all other listeners and stop event bubbling to prevent adware interception
     e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
@@ -548,39 +547,20 @@ downloadBtn.addEventListener('click', function(e) {
         return;
     }
 
-    // Show success feedback immediately (before navigation)
+    // Show success feedback immediately
     this.innerHTML = `<i class="fas fa-check"></i> ${t.modal_downloaded}`;
     this.disabled = true;
 
-    // Create a NEW anchor element with an ISOLATED click handler
+    // ---- TRUE DIRECT DOWNLOAD ----
+    // GitHub Releases serves the APK directly — no ads, no redirects, no new tab.
     const link = document.createElement('a');
-    link.href = DRIVE_DOWNLOAD_URL;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer nofollow';   // Triple protection
-    link.setAttribute('referrerpolicy', 'no-referrer'); // Prevent referrer tracking
+    link.href = APK_DOWNLOAD_URL;
+    link.download = 'KOROSO.apk';           // Force download instead of navigating
+    link.rel = 'noopener noreferrer';
     link.style.display = 'none';
-
-    // CRITICAL: Add a fresh listener that prevents any ad from intercepting
-    link.addEventListener('click', function(ev) {
-        ev.stopImmediatePropagation();
-    }, true);
-
     document.body.appendChild(link);
-
-    // Trigger the click with a synthetic event
-    try {
-        link.click();
-    } catch (err) {
-        // Fallback: direct navigation if .click() fails
-        window.location.href = DRIVE_DOWNLOAD_URL;
-    }
-
-    // Clean up the link after a short delay
-    setTimeout(() => {
-        if (document.body.contains(link)) {
-            document.body.removeChild(link);
-        }
-    }, 500);
+    link.click();
+    document.body.removeChild(link);
 
     // Show install instructions toast and close modal
     setTimeout(() => {
