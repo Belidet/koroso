@@ -99,7 +99,7 @@ const translations = {
         why3_title: "የአካባቢ ባለሙያዎች",
         why3_desc: "ለፈጣን አገልግሎት በአካባቢዎ ውስጥ ተሰጥኦ ያግኙ።",
         dl_title: "ለመጀመር ተዘጋጅተዋል?",
-        dl_subtitle: "የ KOROSO አፕን ዛሬ ያውርዱ እና ማህበረሰቡን ይቀላሉ።",
+        dl_subtitle: "የ KOROSO አፕን ዛሬ ያውርዱ እና ማህበረሰቡን ይቀላቀሉ።",
         dl_button: "KOROSO APK ይጫኑ",
         dl_note: "Android 8.0+ ያስፈልጋል። ደህንነቱ የተጠበቀ እና አስተማማኝ ተከላ።",
         footer_copy: "&copy; 2024 KOROSO. መብቱ በህግ የተጠበቀ ነው።",
@@ -161,6 +161,10 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg-canvas'), alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
+
+// =====================================================
+// 1. SUPER-GLOWING STARFIELD - Maximum Shine & Intensity
+// =====================================================
 
 function createStarTexture() {
     const canvas = document.createElement('canvas');
@@ -277,6 +281,10 @@ const stars = new THREE.Points(starGeometry, starMaterial);
 scene.add(stars);
 
 const starStartTime = Date.now();
+
+// =====================================================
+// 2. FLOATING PROFESSION ICONS
+// =====================================================
 
 const iconList = [
     { type: 'svg', name: 'broom', path: 'M 70 10 L 58 60 L 62 60 L 74 10 Z M 45 60 Q 30 60 25 80 L 75 80 Q 70 60 55 60 Z M 25 80 L 20 95 L 80 95 L 75 80 Z' },
@@ -401,6 +409,10 @@ function initFloatingIcons() {
 
 camera.position.z = 12;
 
+// =====================================================
+// 3. ANIMATION LOOP
+// =====================================================
+
 function animate() {
     requestAnimationFrame(animate);
     
@@ -486,41 +498,24 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 
 // =====================================================
-// --- DOWNLOAD MODAL LOGIC (NATIVE ANCHOR APPROACH) ---
+// --- DOWNLOAD MODAL LOGIC ---
 // =====================================================
-// NEW APPROACH: Instead of creating the link dynamically with JavaScript
-// (which adware extensions intercept), we inject a PERMANENT invisible
-// <a> tag into the page. When the user clicks the button, we simply
-// call .click() on that EXISTING anchor — browsers treat this as a real
-// navigation the same way clicking a link in the page content works.
-// This is the same mechanism Google, Microsoft, and Mozilla use.
+// Link set to sl1nk.com short link.
+//
+// ⚠️ IMPORTANT NOTE:
+// sl1nk.com is an ad-based link shortener. When users click
+// this link, they WILL see ads before the APK download starts.
+// This is how sl1nk.com makes money — it cannot be prevented
+// from the code side.
+//
+// For an ad-free experience, use the GitHub link directly:
+// https://github.com/Belidet/Koroso_app/releases/download/v1.o/koroso.apk
 
 const modal = document.getElementById('downloadModal');
 const downloadBtn = document.getElementById('actualDownloadBtn');
 
-// -----------------------------------------------------
-// YOUR GITHUB RELEASES DIRECT DOWNLOAD LINK
-// -----------------------------------------------------
-const APK_DOWNLOAD_URL = "https://github.com/Belidet/Koroso_app/releases/download/v1.o/koroso.apk";
-
-// -----------------------------------------------------
-// Inject a PERMANENT invisible download anchor into the DOM.
-// This anchor lives in the page from the moment it loads —
-// adware extensions cannot intercept it because it's not created
-// dynamically on click.
-// -----------------------------------------------------
-(function injectDownloadAnchor() {
-    const anchor = document.createElement('a');
-    anchor.id = 'koroso-direct-download-anchor';
-    anchor.href = APK_DOWNLOAD_URL;
-    anchor.download = 'KOROSO.apk';
-    anchor.rel = 'noopener noreferrer';
-    anchor.target = '_self';                    // Same tab — no popup
-    anchor.style.cssText = 'position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;';
-    anchor.setAttribute('aria-hidden', 'true');
-    anchor.textContent = 'Download KOROSO';
-    document.body.appendChild(anchor);
-})();
+// The link the download button opens:
+const APK_DOWNLOAD_URL = "https://sl1nk.com/bh8uniy";
 
 
 function openDownloadModal() {
@@ -539,7 +534,7 @@ window.onclick = function(event) {
     }
 }
 
-// Handle the download — click the PRE-EXISTING anchor
+// Handle the download
 downloadBtn.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -562,14 +557,9 @@ downloadBtn.addEventListener('click', function(e) {
     this.innerHTML = `<i class="fas fa-check"></i> ${t.modal_downloaded}`;
     this.disabled = true;
 
-    // ---- TRIGGER THE PRE-EXISTING ANCHOR ----
-    const anchor = document.getElementById('koroso-direct-download-anchor');
-    if (anchor) {
-        anchor.click();
-    } else {
-        // Emergency fallback: navigate directly
-        window.location.href = APK_DOWNLOAD_URL;
-    }
+    // Open the short link in a new tab
+    // (sl1nk.com redirects will happen here — that's unavoidable with this link)
+    window.open(APK_DOWNLOAD_URL, '_blank', 'noopener,noreferrer');
 
     // Show install instructions toast and close modal
     setTimeout(() => {
