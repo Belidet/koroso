@@ -502,7 +502,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 
 // =====================================================
-// --- DOWNLOAD MODAL LOGIC (WORKS ON PC AND ANDROID) ---
+// --- DOWNLOAD MODAL LOGIC (DIRECT GITHUB DOWNLOAD) ---
 // =====================================================
 // Works on ALL devices:
 // - Android phones → downloads and installs directly
@@ -534,7 +534,7 @@ window.onclick = function(event) {
     }
 }
 
-// Handle the download — WORKS ON PC AND ANDROID
+// Handle the download — DIRECT GITHUB DOWNLOAD (no ads, no redirects)
 downloadBtn.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -550,9 +550,8 @@ downloadBtn.addEventListener('click', function(e) {
     this.innerHTML = `<i class="fas fa-check"></i> ${t.modal_downloaded}`;
     this.disabled = true;
 
-    // ---- DIRECT DOWNLOAD (works on PC and Android) ----
-    // GitHub Releases serves the file directly. On Android, it saves as an
-    // APK that can be installed. On PC, it saves as a file in Downloads.
+    // ---- DIRECT DOWNLOAD FROM GITHUB RELEASES ----
+    // GitHub serves the file directly with no ads, no redirects, no new tabs.
     const link = document.createElement('a');
     link.href = APK_DOWNLOAD_URL;
     link.download = 'KOROSO.apk';         // Force download — never navigate away
