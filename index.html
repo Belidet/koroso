@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KOROSO | Connect. Hire. Get Hired.</title>
     <meta name="description" content="KOROSO connects skilled professionals like accountants, cleaners, and technicians with clients who need them.">
-    
+
     <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Noto+Sans+Ethiopic:wght@400;600;700&display=swap" rel="stylesheet">
@@ -16,30 +16,32 @@
 <body>
 
     <!-- 3D Background Canvas -->
-    <canvas id="bg-canvas"></canvas>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
     <!-- Navigation -->
     <header>
         <div class="container nav-container glass-nav">
-            <a href="#" class="logo-link">
+            <a href="#" class="logo-link" aria-label="KOROSO Home">
                 <img src="koroso-logo.png" alt="KOROSO Logo" class="logo-img">
                 <span class="logo-text">KOROSO</span>
             </a>
-            <nav>
+            <nav aria-label="Main navigation">
                 <ul class="nav-links">
                     <li><a href="#how-it-works" data-i18n="nav_how">How it Works</a></li>
                     <li><a href="#services" data-i18n="nav_services">Services</a></li>
                     <li><a href="#why-us" data-i18n="nav_why">Why KOROSO</a></li>
-                    <li><a href="#" class="btn-nav-download" onclick="openDownloadModal()" data-i18n="nav_download">Download App</a></li>
                     <li>
-                        <button class="lang-toggle" onclick="toggleLanguage()" id="langBtn">
-                            <i class="fas fa-globe"></i> <span id="langLabel">አማርኛ</span>
+                        <button type="button" class="btn-nav-download" onclick="openDownloadModal()" data-i18n="nav_download">Download App</button>
+                    </li>
+                    <li>
+                        <button type="button" class="lang-toggle" onclick="toggleLanguage()" id="langBtn" aria-label="Toggle language">
+                            <i class="fas fa-globe" aria-hidden="true"></i> <span id="langLabel">አማርኛ</span>
                         </button>
                     </li>
                 </ul>
-                <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars"></i>
-                </div>
+                <button type="button" class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Open menu">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
             </nav>
         </div>
     </header>
@@ -51,8 +53,8 @@
                 <h1 data-i18n="hero_title">Find the Right Skills, <span class="highlight">Right Now.</span></h1>
                 <p data-i18n="hero_subtitle">KOROSO connects you with verified local professionals—from accountants to technicians—instantly. Whether you need a service or want to offer one, we make it happen.</p>
                 <div class="hero-buttons">
-                    <button class="btn-primary glow-effect" onclick="openDownloadModal()">
-                        <i class="fab fa-android"></i> <span data-i18n="btn_download">Download for Android</span>
+                    <button type="button" class="btn-primary glow-effect" onclick="openDownloadModal()">
+                        <i class="fab fa-android" aria-hidden="true"></i> <span data-i18n="btn_download">Download for Android</span>
                     </button>
                     <a href="#how-it-works" class="btn-secondary" data-i18n="btn_learn">Learn More</a>
                 </div>
@@ -73,18 +75,18 @@
             </div>
             <div class="steps-grid">
                 <div class="step-card glass-panel">
-                    <div class="step-icon"><i class="fas fa-user-plus"></i></div>
+                    <div class="step-icon"><i class="fas fa-user-plus" aria-hidden="true"></i></div>
                     <h3 data-i18n="step1_title">1. Create Profile</h3>
                     <p data-i18n="step1_desc">Sign up as a client looking for help or a provider showcasing your skills.</p>
                 </div>
                 <div class="step-card glass-panel">
-                    <div class="step-icon"><i class="fas fa-search"></i></div>
+                    <div class="step-icon"><i class="fas fa-search" aria-hidden="true"></i></div>
                     <h3 data-i18n="step2_title">2. Browse Services</h3>
                     <p data-i18n="step2_desc">Explore a wide range of categories or let clients find you based on your profession.</p>
                 </div>
                 <div class="step-card glass-panel">
-                    <div class="step-icon"><i class="fas fa-handshake"></i></div>
-                    <h3 data-i18n="step3_title">3. Connect & Hire</h3>
+                    <div class="step-icon"><i class="fas fa-handshake" aria-hidden="true"></i></div>
+                    <h3 data-i18n="step3_title">3. Connect &amp; Hire</h3>
                     <p data-i18n="step3_desc">Chat securely, agree on terms, and get the job done efficiently.</p>
                 </div>
             </div>
@@ -101,32 +103,32 @@
             </div>
             <div class="services-grid">
                 <div class="service-card glass-panel">
-                    <i class="fas fa-calculator"></i>
+                    <i class="fas fa-calculator" aria-hidden="true"></i>
                     <h3 data-i18n="serv_accountant">Accountants</h3>
                     <p data-i18n="serv_accountant_desc">Tax prep, bookkeeping, and financial advice.</p>
                 </div>
                 <div class="service-card glass-panel">
-                    <i class="fas fa-broom"></i>
+                    <i class="fas fa-broom" aria-hidden="true"></i>
                     <h3 data-i18n="serv_cleaner">House Cleaners</h3>
                     <p data-i18n="serv_cleaner_desc">Deep cleaning, regular maintenance, and moving help.</p>
                 </div>
                 <div class="service-card glass-panel">
-                    <i class="fas fa-tools"></i>
+                    <i class="fas fa-tools" aria-hidden="true"></i>
                     <h3 data-i18n="serv_tech">Electronics Technicians</h3>
                     <p data-i18n="serv_tech_desc">Repairs for TVs, phones, computers, and appliances.</p>
                 </div>
                 <div class="service-card glass-panel">
-                    <i class="fas fa-wrench"></i>
+                    <i class="fas fa-wrench" aria-hidden="true"></i>
                     <h3 data-i18n="serv_plumber">Plumbers</h3>
                     <p data-i18n="serv_plumber_desc">Leak fixes, pipe installation, and emergency repairs.</p>
                 </div>
                 <div class="service-card glass-panel">
-                    <i class="fas fa-paint-roller"></i>
+                    <i class="fas fa-paint-roller" aria-hidden="true"></i>
                     <h3 data-i18n="serv_painter">Painters</h3>
                     <p data-i18n="serv_painter_desc">Interior and exterior painting for homes and offices.</p>
                 </div>
                 <div class="service-card glass-panel">
-                    <i class="fas fa-truck"></i>
+                    <i class="fas fa-truck" aria-hidden="true"></i>
                     <h3 data-i18n="serv_mover">Movers</h3>
                     <p data-i18n="serv_mover_desc">Safe and efficient relocation services.</p>
                 </div>
@@ -143,17 +145,17 @@
             </div>
             <div class="features-grid">
                 <div class="feature-item glass-panel">
-                    <i class="fas fa-shield-alt"></i>
+                    <i class="fas fa-shield-alt" aria-hidden="true"></i>
                     <h3 data-i18n="why1_title">Verified Profiles</h3>
                     <p data-i18n="why1_desc">We verify IDs and skills so you can hire with confidence.</p>
                 </div>
                 <div class="feature-item glass-panel">
-                    <i class="fas fa-comments"></i>
+                    <i class="fas fa-comments" aria-hidden="true"></i>
                     <h3 data-i18n="why2_title">Secure Messaging</h3>
                     <p data-i18n="why2_desc">Communicate safely within the app before sharing personal details.</p>
                 </div>
                 <div class="feature-item glass-panel">
-                    <i class="fas fa-map-marker-alt"></i>
+                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                     <h3 data-i18n="why3_title">Local Professionals</h3>
                     <p data-i18n="why3_desc">Find talent right in your neighborhood for faster service.</p>
                 </div>
@@ -166,8 +168,8 @@
         <div class="container download-content glass-panel">
             <h2 data-i18n="dl_title">Ready to get started?</h2>
             <p data-i18n="dl_subtitle">Download the KOROSO app today and join the community.</p>
-            <button class="btn-primary btn-large glow-effect" onclick="openDownloadModal()">
-                <i class="fab fa-android"></i> <span data-i18n="dl_button">Install KOROSO APK</span>
+            <button type="button" class="btn-primary btn-large glow-effect" onclick="openDownloadModal()">
+                <i class="fab fa-android" aria-hidden="true"></i> <span data-i18n="dl_button">Install KOROSO APK</span>
             </button>
             <p class="small-note" data-i18n="dl_note">Android 8.0+ required. Safe and secure installation.</p>
         </div>
@@ -182,20 +184,20 @@
             </div>
             <p data-i18n="footer_copy">&copy; 2024 KOROSO. All rights reserved.</p>
             <div class="social-links">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
             </div>
         </div>
     </footer>
 
     <!-- Download Modal -->
-    <div id="downloadModal" class="modal">
+    <div id="downloadModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-content glass-panel">
-            <span class="close-btn" onclick="closeDownloadModal()">&times;</span>
+            <button type="button" class="close-btn" onclick="closeDownloadModal()" aria-label="Close">&times;</button>
             <div class="modal-header">
                 <img src="koroso-logo.png" alt="KOROSO" class="modal-logo">
-                <h2 data-i18n="modal_title">Install KOROSO</h2>
+                <h2 id="modalTitle" data-i18n="modal_title">Install KOROSO</h2>
             </div>
             <div class="modal-body">
                 <p data-i18n="modal_intro">To install the app, please follow these steps:</p>
@@ -205,9 +207,9 @@
                     <li data-i18n="modal_step3">Open the downloaded file to install KOROSO.</li>
                 </ol>
                 <div class="security-warning">
-                    <i class="fas fa-lock"></i> <span data-i18n="modal_secure">Your security is our priority. The file is scanned.</span>
+                    <i class="fas fa-lock" aria-hidden="true"></i> <span data-i18n="modal_secure">Your security is our priority. The file is scanned.</span>
                 </div>
-                <button id="actualDownloadBtn" class="btn-primary" style="width: 100%; margin-top: 20px;">
+                <button type="button" id="actualDownloadBtn" class="btn-primary" style="width: 100%; margin-top: 20px;">
                     <span data-i18n="modal_btn">Download APK Now</span>
                 </button>
             </div>
